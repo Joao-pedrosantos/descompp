@@ -86,11 +86,13 @@ CPU  : entity work.CPU			  generic map (dataWidth => larguraDados, addrWidth => 
 ROM1 : entity work.memoriaROM   generic map (dataWidth => larguraDados, addrWidth => larguraEnderecos)
           port map (Endereco => PC, Dado => Comando);
 			 
-			 
+RAM0 : entity work.memoriaRAM   generic map (dataWidth => (8))
+          port map (addr => Endereco(5 downto 0), we => habEscritaMEM, re => habLeituraMEM, habilita => habRAM(0), clk => CLK, dado_in => Dout, dado_out =>saidaMEM);		 
 			 
 			 
 RAM4 : entity work.memoriaRAM   generic map (dataWidth => (8))
           port map (addr => Endereco(5 downto 0), we => habEscritaMEM, re => habLeituraMEM, habilita => habRAM(4), clk => CLK, dado_in => Dout, dado_out =>saidaMEM);
+	
 
 DEC1  : entity work.decoderGenerico3x8
 			 port map (entrada => Endereco(8 downto 6), saida => habRAM);
@@ -184,11 +186,11 @@ buff3_9 :  entity work.buffer_3_state_1porta
         port map(entrada => SW(9), habilita =>  (habLeituraMEM AND not(Endereco(5)) AND habLED(2) AND habRAM(5)), saida => saidaMEM(0));
 
 buff3_K0 :  entity work.buffer_3_state_1porta
-        port map(entrada => (not(KEY(0))), habilita =>  (habLeituraMEM AND Endereco(5) AND habLED(0) AND habRAM(5)), saida => saidaMEM(0));
+        port map(entrada => (k0saida), habilita =>  (habLeituraMEM AND Endereco(5) AND habLED(0) AND habRAM(5)), saida => saidaMEM(0));
 		  
 
 buff3_K1 :  entity work.buffer_3_state_1porta
-        port map(entrada => k0saida, habilita =>  (habLeituraMEM AND Endereco(5) AND habLED(1) AND habRAM(5)), saida => saidaMEM(0));
+        port map(entrada => not(KEY(1)), habilita =>  (habLeituraMEM AND Endereco(5) AND habLED(1) AND habRAM(5)), saida => saidaMEM(0));
 		    
 buff3_K2 :  entity work.buffer_3_state_1porta
         port map(entrada => not(KEY(2)), habilita =>  (habLeituraMEM AND Endereco(5) AND habLED(2) AND habRAM(5)), saida => saidaMEM(0));
@@ -202,7 +204,7 @@ buff3_K4 :  entity work.buffer_3_state_1porta
 		    
 		  	   
 detectorK0: entity work.edgeDetector(bordaSubida)
-        port map (clk => CLK, entrada => not(KEY(1)), saida => k0buff);
+        port map (clk => CLK, entrada => not(KEY(0)), saida => k0buff);
 
 FLAG : entity work.registradorFlag   
           port map (DIN => '1', DOUT => k0saida, ENABLE => '1', CLK => k0buff, RST => (habEscritaMEM AND Endereco(8) AND Endereco(7) AND Endereco(6) AND Endereco(5) AND Endereco(4) AND Endereco(3) AND Endereco(2) AND Endereco(1) AND Endereco(0)));

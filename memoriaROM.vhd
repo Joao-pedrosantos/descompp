@@ -35,45 +35,28 @@ architecture assincrona of memoriaROM is
   begin
       -- Palavra de Controle = SelMUX, Habilita_A, Reset_A, Operacao_ULA
       -- Inicializa os endereços:
-			tmp(0)  := LDI  &  "000000000"; --0
-			tmp(1)  := STA  &  "000000000"; --0
-			tmp(2)  := LDI  &  "000000101";
-			tmp(3)  := STA  &  "000000010"; --2
-			tmp(4)  := LDI  &  "000000001"; --1
-			tmp(5)  := STA  &  "000000001"; --1
-			
-			
-			
-			
-			
-			tmp(6)  := NOP  &  "000000000"; --NOP
-			tmp(7)  := LDA  &  "101100001"; --352
-			tmp(8)  := ND   &  "000000000";
-			tmp(9)  := STA  &  "100100000"; --288
-			tmp(10) := CEQ  &  "000000000"; --0
-			tmp(11) := JEQ  &  "000000000"; --12
-			tmp(12) := JSR  &  "000100000"; --291
-			
-			
-			
-			
-			
-			tmp(13) := NOP  &  "000000000"; --353
-			tmp(14) := JMP  &  "000000110"; --6
-			
-			
-			
-			tmp(32) := STA  &  "111111111"; --511
-			tmp(33) := LDA  &  "000000010"; --354
-			tmp(34) := ND   &  "000000000";
-			tmp(35) := SOMA &  "000000001"; --0
-			tmp(36) := STA  &  "000000010"; --293
-			tmp(37) := STA  &  "100000010"; --355
-			tmp(38) := STA  &  "100100101"; --0
-			tmp(39) := RET  &  "000000000"; --257
-			
-			
-        return tmp;
+		tmp(0)  := LDI  &  "000000000"; --320
+		tmp(1)  := STA  &  "000000000";
+		tmp(2)  := STA  &  "000000010";
+		tmp(3)  := LDI  &  "000000001";
+		tmp(4)  := STA  &  "000000001";
+		
+		tmp(5)  := NOP  &  "000000000";
+		
+		tmp(6)  := LDA  &  "101100000";
+		tmp(7)  :=  ND  &  "000000000";
+		tmp(8)  := CEQ  &  "000000000";
+		tmp(9)  := JEQ  &  "000100000";
+		tmp(11) := JMP  &  "000000101";
+		
+		tmp(32) := STA  &  "111111111";
+		tmp(33) := LDA  &  "000000010";
+		tmp(34) := SOMA &  "000000001";
+		tmp(35) := STA  &  "000000010";
+		tmp(36) := STA  &  "100100010";
+		tmp(37) := JMP  &  "000000101";
+      
+		return tmp;
     end initMemory;
 
     signal memROM : blocoMemoria := initMemory;
