@@ -69,6 +69,11 @@ architecture arquitetura of aula08 is
   signal saida_deb0_1    : std_logic;
   signal saida_reg_deb0  : std_logic;
   signal hab_key0			 : std_logic;
+  
+  signal limpa1			 : std_logic;
+  signal saida_deb1      : std_logic; 
+  signal saida_reg_deb1  : std_logic;
+  signal hab_key1			 : std_logic;
 
 
 begin
@@ -202,12 +207,11 @@ buff3_9 :  entity work.buffer_3_state_1porta
 		  
 key0: entity work.buffer_3_state_8portas
 			port map (entrada => "0000000" & saida_reg_deb0, habilita => hab_key0, saida => saidaMEM);
+			
+key1: entity work.buffer_3_state_8portas
+			port map (entrada => "0000000" & saida_reg_deb1, habilita => hab_key1, saida => saidaMEM);
 		  
 		  
-		  
-
-buff3_K1 :  entity work.buffer_3_state_1porta
-        port map(entrada => not(KEY(1)), habilita =>  (habLeituraMEM AND Endereco(5) AND habLED(1) AND habRAM(5)), saida => saidaMEM(0));
 		    
 buff3_K2 :  entity work.buffer_3_state_1porta
         port map(entrada => not(KEY(2)), habilita =>  (habLeituraMEM AND Endereco(5) AND habLED(2) AND habRAM(5)), saida => saidaMEM(0));
@@ -226,12 +230,25 @@ debounce0: work.edgeDetector(bordaSubida)
 
 fdebounce0 : entity work.registradorFlag   
           port map (DIN => '1', DOUT => saida_reg_deb0, ENABLE => '1', CLK => (saida_deb0), RST => limpa0);
-					  
+
+
+
+debounce1: work.edgeDetector(bordaSubida)
+        port map (clk => CLK, entrada => (not KEY(1)), saida => saida_deb1);
+
+
+fdebounce1 : entity work.registradorFlag   
+          port map (DIN => '1', DOUT => saida_reg_deb1, ENABLE => '1', CLK => (saida_deb1), RST => limpa1);
+
+			 
 PC_OUT <= PC;
 
 MEM <= saidaMEM;
 
 limpa0 <= (habEscritaMEM AND Endereco(8) AND Endereco(7) AND Endereco(6) AND Endereco(5) AND Endereco(4) AND Endereco(3) AND Endereco(2) AND Endereco(1) AND Endereco(0));
+limpa1 <= (habEscritaMEM AND Endereco(8) AND Endereco(7) AND Endereco(6) AND Endereco(5) AND Endereco(4) AND Endereco(3) AND Endereco(2) AND Endereco(1) AND not(Endereco(0)));
+
 hab_key0 <= (habLeituraMEM and Endereco(5) and habLED(0) and habRAM(5));
+hab_key1 <= (habLeituraMEM and Endereco(5) and habLED(1) and habRAM(5));
 
 end architecture;
