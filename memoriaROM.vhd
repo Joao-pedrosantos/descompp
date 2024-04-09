@@ -26,7 +26,7 @@ architecture assincrona of memoriaROM is
   constant CEQ  : std_logic_vector(3 downto 0) := "1000";
   constant JSR  : std_logic_vector(3 downto 0) := "1001";
   constant RET  : std_logic_vector(3 downto 0) := "1010";
-  constant ND   : std_logic_vector(3 downto 0) := "1011";
+  constant ANDi : std_logic_vector(3 downto 0) := "1011";
   
   type blocoMemoria is array(0 TO 2**addrWidth - 1) of std_logic_vector(dataWidth-1 DOWNTO 0);
 
@@ -35,27 +35,32 @@ architecture assincrona of memoriaROM is
   begin
       -- Palavra de Controle = SelMUX, Habilita_A, Reset_A, Operacao_ULA
       -- Inicializa os endereços:
-		tmp(0)  := LDI  &  "000000000"; --320
-		tmp(1)  := STA  &  "000000000";
-		tmp(2)  := STA  &  "000000010";
-		tmp(3)  := LDI  &  "000000001";
-		tmp(4)  := STA  &  "000000001";
-		
-		tmp(5)  := NOP  &  "000000000";
-		
-		tmp(6)  := LDA  &  "101100000";
-		tmp(7)  :=  ND  &  "000000000";
-		tmp(8)  := CEQ  &  "000000000";
-		tmp(9)  := JEQ  &  "000100000";
-		tmp(11) := JMP  &  "000000101";
-		
-		tmp(32) := STA  &  "111111111";
-		tmp(33) := LDA  &  "000000010";
-		tmp(34) := SOMA &  "000000001";
-		tmp(35) := STA  &  "000000010";
-		tmp(36) := STA  &  "100100010";
-		tmp(37) := JMP  &  "000000101";
-      
+tmp(0)  := LDI  &  "000000000"; --320
+tmp(1)  := STA  &  "000000000"; --288
+tmp(2)  := STA  &  "000000010";
+tmp(3)  := STA  &  "111111111";
+tmp(4)  := LDI  &  "000000001"; --320
+tmp(5)  := STA  &  "000000001"; --288
+
+tmp(6)  := LDA  &  "101100000"; --352
+tmp(7)  := ANDi &  "000000001"; --0
+
+
+tmp(8)  := CEQ  &  "000000000";
+tmp(9)  := JEQ  &  "000000110";
+
+
+tmp(10)  := JSR  &  "000100000"; 
+tmp(11) := JMP  &  "000000110";
+
+tmp(32)  := LDI  & "111111111";
+tmp(33)  := STA  & "111111111";
+tmp(34)  := LDA  & "000000010";
+tmp(35)  := SOMA & "000000001";
+tmp(36)  := STA  & "000000010";
+tmp(37)  := STA  & "100100000";
+tmp(38)  := RET  & "000000000";
+
 		return tmp;
     end initMemory;
 

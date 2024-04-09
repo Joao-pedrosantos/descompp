@@ -64,6 +64,11 @@ architecture arquitetura of aula08 is
   signal sreg1b2			 : std_logic;
   signal k0buff          : std_logic;
   signal k0saida			 : std_logic;
+  signal limpa0			 : std_logic;
+  signal saida_deb0      : std_logic;
+  signal saida_deb0_1    : std_logic;
+  signal saida_reg_deb0  : std_logic;
+  signal hab_key0			 : std_logic;
 
 
 begin
@@ -92,6 +97,9 @@ RAM0 : entity work.memoriaRAM   generic map (dataWidth => (8))
 			 
 RAM4 : entity work.memoriaRAM   generic map (dataWidth => (8))
           port map (addr => Endereco(5 downto 0), we => habEscritaMEM, re => habLeituraMEM, habilita => habRAM(4), clk => CLK, dado_in => Dout, dado_out =>saidaMEM);
+
+RAM8 : entity work.memoriaRAM   generic map (dataWidth => (8))
+          port map (addr => Endereco(5 downto 0), we => habEscritaMEM, re => habLeituraMEM, habilita => habRAM(7), clk => CLK, dado_in => Dout, dado_out =>saidaMEM);
 	
 
 DEC1  : entity work.decoderGenerico3x8
@@ -175,6 +183,10 @@ conv5 :  entity work.conversorHex7Seg
                  saida7seg => HEX5);
 					  
 					  
+					  
+					  
+					  
+					  
 buff3_7_0 :  entity work.buffer_3_state_8portas
         port map(entrada => SW(7 downto 0), habilita =>  (habLeituraMEM AND not(Endereco(5)) AND habLED(0) AND habRAM(5)), saida => saidaMEM);
 
@@ -185,8 +197,13 @@ buff3_8 :  entity work.buffer_3_state_1porta
 buff3_9 :  entity work.buffer_3_state_1porta
         port map(entrada => SW(9), habilita =>  (habLeituraMEM AND not(Endereco(5)) AND habLED(2) AND habRAM(5)), saida => saidaMEM(0));
 
-buff3_K0 :  entity work.buffer_3_state_1porta
-        port map(entrada => (k0saida), habilita =>  (habLeituraMEM AND Endereco(5) AND habLED(0) AND habRAM(5)), saida => saidaMEM(0));
+		  
+		  
+		  
+key0: entity work.buffer_3_state_8portas
+			port map (entrada => "0000000" & saida_reg_deb0, habilita => hab_key0, saida => saidaMEM);
+		  
+		  
 		  
 
 buff3_K1 :  entity work.buffer_3_state_1porta
@@ -203,17 +220,18 @@ buff3_K4 :  entity work.buffer_3_state_1porta
         port map(entrada => not(FPGA_RESET_N), habilita =>  (habLeituraMEM AND Endereco(5) AND habLED(4) AND habRAM(5)), saida => saidaMEM(0));
 		    
 		  	   
-detectorK0: entity work.edgeDetector(bordaSubida)
-        port map (clk => CLK, entrada => not(KEY(0)), saida => k0buff);
+debounce0: work.edgeDetector(bordaSubida)
+        port map (clk => CLK, entrada => (not KEY(0)), saida => saida_deb0);
 
-FLAG : entity work.registradorFlag   
-          port map (DIN => '1', DOUT => k0saida, ENABLE => '1', CLK => k0buff, RST => (habEscritaMEM AND Endereco(8) AND Endereco(7) AND Endereco(6) AND Endereco(5) AND Endereco(4) AND Endereco(3) AND Endereco(2) AND Endereco(1) AND Endereco(0)));
+
+fdebounce0 : entity work.registradorFlag   
+          port map (DIN => '1', DOUT => saida_reg_deb0, ENABLE => '1', CLK => (saida_deb0), RST => limpa0);
 					  
 PC_OUT <= PC;
-LEDR(7 downto 0) <= sreg8b;
-LEDR(9) <= sreg1b;
-LEDR(8) <= sreg1b2;
+
 MEM <= saidaMEM;
 
+limpa0 <= (habEscritaMEM AND Endereco(8) AND Endereco(7) AND Endereco(6) AND Endereco(5) AND Endereco(4) AND Endereco(3) AND Endereco(2) AND Endereco(1) AND Endereco(0));
+hab_key0 <= (habLeituraMEM and Endereco(5) and habLED(0) and habRAM(5));
 
 end architecture;
