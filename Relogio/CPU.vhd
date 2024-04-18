@@ -15,7 +15,7 @@ entity CPU is
 	 Data_OUT : out std_logic_vector (7 downto 0);
 	 Data_Address : out std_logic_vector (8 downto 0);
 	 reg	: out std_logic_vector (7 downto 0);
-	 adds : out std_logic_vector (2 downto 0)
+	 adds : out std_logic_vector (5 downto 0)
   );
   
 end entity;
@@ -120,7 +120,7 @@ MUXRET   :  entity work.muxGenerico2x1  generic map (larguraDados => 6)
 
 			
 ULA_sr : entity work.ULASomaSubRET  generic map(larguraDados => (6))
-          port map (entradaA => end_ret, entradaB => "000001", saida => reg_ret, seletor => Operacao_ULA_ret);
+          port map (entradaA => saida_Reg, entradaB => "000001", saida => reg_ret, seletor => Operacao_ULA_ret);
 
 
 RET : entity work.registradorGenerico   generic map (larguraDados => (6))
@@ -180,7 +180,7 @@ LDESV :   entity work.decoderJMP
                  saida => selMUXRET);
 					  
 
-adds <= Comando(15 downto 13);
+adds <= end_ram;
 ROM_Address <= Endereco;
 
 

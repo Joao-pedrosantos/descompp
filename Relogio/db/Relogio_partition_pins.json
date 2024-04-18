@@ -104,6 +104,30 @@
 					"strict" : false
 				},
 				{
+					"name" : "adrs[0]",
+					"strict" : false
+				},
+				{
+					"name" : "adrs[1]",
+					"strict" : false
+				},
+				{
+					"name" : "adrs[2]",
+					"strict" : false
+				},
+				{
+					"name" : "adrs[3]",
+					"strict" : false
+				},
+				{
+					"name" : "adrs[4]",
+					"strict" : false
+				},
+				{
+					"name" : "adrs[5]",
+					"strict" : false
+				},
+				{
 					"name" : "CLOCK_50",
 					"strict" : false
 				}

@@ -19,7 +19,7 @@
 -- the top level entity of the current Quartus project .The user can use this   
 -- testbench to simulate his design using a third-party simulation tool .       
 -- *****************************************************************************
--- Generated on "04/18/2024 14:17:50"
+-- Generated on "04/18/2024 14:47:37"
                                                              
 -- Vhdl Test Bench(with test vectors) for design  :          Relogio
 -- 
@@ -34,7 +34,7 @@ END Relogio_vhd_vec_tst;
 ARCHITECTURE Relogio_arch OF Relogio_vhd_vec_tst IS
 -- constants                                                 
 -- signals                                                   
-SIGNAL adrs : STD_LOGIC_VECTOR(2 DOWNTO 0);
+SIGNAL adrs : STD_LOGIC_VECTOR(5 DOWNTO 0);
 SIGNAL bolso : STD_LOGIC_VECTOR(7 DOWNTO 0);
 SIGNAL CLOCK_50 : STD_LOGIC;
 SIGNAL FPGA_RESET_N : STD_LOGIC;
@@ -51,7 +51,7 @@ SIGNAL PC_OUT : STD_LOGIC_VECTOR(8 DOWNTO 0);
 SIGNAL SW : STD_LOGIC_VECTOR(9 DOWNTO 0);
 COMPONENT Relogio
 	PORT (
-	adrs : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
+	adrs : OUT STD_LOGIC_VECTOR(5 DOWNTO 0);
 	bolso : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
 	CLOCK_50 : IN STD_LOGIC;
 	FPGA_RESET_N : IN STD_LOGIC;

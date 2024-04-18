@@ -113,6 +113,9 @@ bolso[7] <= cpu:CPU.reg[7]
 adrs[0] <= cpu:CPU.adds[0]
 adrs[1] <= cpu:CPU.adds[1]
 adrs[2] <= cpu:CPU.adds[2]
+adrs[3] <= cpu:CPU.adds[3]
+adrs[4] <= cpu:CPU.adds[4]
+adrs[5] <= cpu:CPU.adds[5]
 
 
 |Relogio|CPU:CPU
@@ -172,11 +175,8 @@ Instruction_IN[10] => decoderinstru:decoderInstru.opcode[1]
 Instruction_IN[11] => decoderinstru:decoderInstru.opcode[2]
 Instruction_IN[12] => decoderinstru:decoderInstru.opcode[3]
 Instruction_IN[13] => bancoregistradoresarqregmem:REGS.endereco[0]
-Instruction_IN[13] => adds[0].DATAIN
 Instruction_IN[14] => bancoregistradoresarqregmem:REGS.endereco[1]
-Instruction_IN[14] => adds[1].DATAIN
 Instruction_IN[15] => bancoregistradoresarqregmem:REGS.endereco[2]
-Instruction_IN[15] => adds[2].DATAIN
 Data_IN[0] => muxgenerico2x1:MUX1.entradaA_MUX[0]
 Data_IN[1] => muxgenerico2x1:MUX1.entradaA_MUX[1]
 Data_IN[2] => muxgenerico2x1:MUX1.entradaA_MUX[2]
@@ -210,9 +210,12 @@ reg[4] <= bancoregistradoresarqregmem:REGS.saida[4]
 reg[5] <= bancoregistradoresarqregmem:REGS.saida[5]
 reg[6] <= bancoregistradoresarqregmem:REGS.saida[6]
 reg[7] <= bancoregistradoresarqregmem:REGS.saida[7]
-adds[0] <= Instruction_IN[13].DB_MAX_OUTPUT_PORT_TYPE
-adds[1] <= Instruction_IN[14].DB_MAX_OUTPUT_PORT_TYPE
-adds[2] <= Instruction_IN[15].DB_MAX_OUTPUT_PORT_TYPE
+adds[0] <= muxgenerico2x1:MUXRET.saida_MUX[0]
+adds[1] <= muxgenerico2x1:MUXRET.saida_MUX[1]
+adds[2] <= muxgenerico2x1:MUXRET.saida_MUX[2]
+adds[3] <= muxgenerico2x1:MUXRET.saida_MUX[3]
+adds[4] <= muxgenerico2x1:MUXRET.saida_MUX[4]
+adds[5] <= muxgenerico2x1:MUXRET.saida_MUX[5]
 
 
 |Relogio|CPU:CPU|muxGenerico2x1:MUX1
