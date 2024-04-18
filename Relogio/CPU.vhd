@@ -24,7 +24,7 @@ end entity;
 architecture arquitetura of CPU is
   
   signal ROM_Addr : std_logic_vector (8 downto 0);
-  signal Sinais_Controle : std_logic_vector (11 downto 0);
+  signal Sinais_Controle : std_logic_vector (14 downto 0);
   signal PC_JMP : std_logic_vector (8 downto 0); 
   signal Endereco : std_logic_vector (8 downto 0);
   signal proxPC   : std_logic_vector (8 downto 0);
@@ -45,10 +45,26 @@ architecture arquitetura of CPU is
   signal saidaMEM : std_logic_vector (dataWidth-6 downto 0);
   signal OpCode : std_logic_vector (3 downto 0);
   signal saida_RET : std_logic_vector (dataWidth-5 downto 0);
-  signal endReg   : std_logic_vector  (2 downto 0); 
+  signal endReg   : std_logic_vector  (2 downto 0);
+  
+  
+  
+  
+  signal end_ret  : std_logic_vector (5 downto 0);
+  signal saida_Reg : std_logic_vector (5 downto 0);
+  signal reg_ret  : std_logic_vector (5 downto 0);
+  signal end_ram  : std_logic_vector (5 downto 0);
+  
  
+  
+  
+  
+  
   signal Operacao_ULA : std_logic_vector (1 downto 0);
-  signal selMUXRET : std_logic_vector (1 downto 0);
+  signal Operacao_ULA_ret : std_logic;
+  signal SelMUXRet : std_logic_vector (1 downto 0);
+  signal MUXPILHA : std_logic;
+  
   
   signal Chave_Operacao_ULA : std_logic;
   signal CLK : std_logic;
@@ -64,6 +80,7 @@ architecture arquitetura of CPU is
   signal flg : std_logic;
   signal saida_Flag : std_logic;
   signal habFlag : std_logic;
+  signal habLeituraMEM_RET : std_logic;
 
 begin
 
@@ -89,14 +106,33 @@ FLAG : entity work.registradorFlag   generic map (larguraDados => (dataWidth-5))
           port map (DIN => flg, DOUT => saida_Flag, ENABLE => habFlag, CLK => CLK, RST => '0');
 
 -- O port map completo do Acumulador.
-RET : entity work.registradorGenerico   generic map (larguraDados => (dataWidth-4))
-          port map (DIN => proxPC, DOUT => saida_Ret, ENABLE => habEscritaRET, CLK => CLK, RST => '0');
+--RET : entity work.registradorGenerico   generic map (larguraDados => (dataWidth-4))
+--          port map (DIN => proxPC, DOUT => saida_Ret, ENABLE => habEscritaRET, CLK => CLK, RST => '0');
 
 
--- O port map completo do Acumulador.
---REGA : entity work.registradorGenerico   generic map (larguraDados => (dataWidth-5))
---          port map (DIN => Saida_ULA, DOUT => REG1_ULA_A, ENABLE => Habilita_A, CLK => CLK, RST => '0');
 
+MUXRET   :  entity work.muxGenerico2x1  generic map (larguraDados => 6)
+					port map( entradaA_MUX => saida_Reg,
+                 entradaB_MUX =>  reg_ret,
+                 seletor_MUX => MUXPILHA,
+                 saida_MUX => end_ram);
+			
+
+			
+ULA_sr : entity work.ULASomaSubRET  generic map(larguraDados => (6))
+          port map (entradaA => end_ret, entradaB => "000001", saida => reg_ret, seletor => Operacao_ULA_ret);
+
+
+RET : entity work.registradorGenerico   generic map (larguraDados => (6))
+          port map (DIN => reg_ret, DOUT => saida_Reg, ENABLE => habEscritaRET, CLK => CLK, RST => '0');	
+
+			
+RAM_RET  : entity work.memoriaRAM   generic map (dataWidth => (9), addrWidth => (9))
+          port map (addr => end_ram, we => habEscritaRET, re => habLeituraMEM_RET, habilita => '1', clk => CLK, dado_in => proxPC, dado_out =>saida_Ret);		 
+
+ 
+
+				  
 REGS : entity work.bancoRegistradoresArqRegMem   generic map (larguraDados => (dataWidth-5), larguraEndBancoRegs => 3)
           port map ( clk => CLK,
               endereco => Comando(15 downto 13),
@@ -146,6 +182,12 @@ LDESV :   entity work.decoderJMP
 
 adds <= Comando(15 downto 13);
 ROM_Address <= Endereco;
+
+
+
+habLeituraMEM_RET <= Sinais_Controle(14);
+MUXPILHA <= Sinais_Controle(13);
+Operacao_ULA_ret <= Sinais_Controle(12);
 habEscritaRET <= Sinais_Controle(11);
 JMP <= Sinais_Controle(10);
 RETnr <= Sinais_Controle(9);

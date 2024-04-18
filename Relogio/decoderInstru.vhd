@@ -4,7 +4,7 @@ use ieee.std_logic_1164.all;
 entity decoderInstru is
   port ( opcode : in std_logic_vector(3 downto 0);
 			fg	    : in std_logic;
-         saida  : out std_logic_vector(11 downto 0)
+         saida  : out std_logic_vector(14 downto 0)
   );
 end entity;
 
@@ -24,18 +24,20 @@ architecture comportamento of decoderInstru is
   constant ANDi : std_logic_vector(3 downto 0) := "1011"; --11
 
   begin
-saida <= "000000000000" when opcode = NOP  else
-         "000000110010" when opcode = LDA  else
-         "000000101010" when opcode = SOMA else
-         "000000100010" when opcode = SUB  else
-			"000001111000" when opcode = ANDi else
-         "000001110000" when opcode = LDI  else
-         "000000000001" when opcode = STA  else
-			"010000000000" when opcode = JMP  else
-			"000010000000" when (opcode = JEQ and fg = '1')  else
-			"000000000110" when opcode = CEQ  else
-			"100100000000" when opcode = JSR  else
-			"001000000000" when opcode = RET  else
-			"000000000000";  -- NOP para os opcodes Indefinidos
+saida <= "000000000000000" when opcode = NOP  else
+         "000000000110010" when opcode = LDA  else
+         "000000000101010" when opcode = SOMA else
+         "000000000100010" when opcode = SUB  else
+			"000000001111000" when opcode = ANDi else
+         "000000001110000" when opcode = LDI  else
+         "000000000000001" when opcode = STA  else
+			"000010000000000" when opcode = JMP  else
+			"000000010000000" when (opcode = JEQ and fg = '1')  else
+			"000000000000110" when opcode = CEQ  else
+			"011100100000000" when opcode = JSR  else
+			"100001000000000" when opcode = RET  else
+			"000000000000000";  -- NOP para os opcodes Indefinidos
+			
+			
 
 	end architecture;

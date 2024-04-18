@@ -10,7 +10,7 @@ z2
 cModel Technology
 Z0 d/home/joao/Documents/DesComp/Relogio/simulation/qsim
 Erelogio
-Z1 w1713220408
+Z1 w1713460671
 Z2 DPx8 cyclonev 18 cyclonev_atom_pack 0 22 ^K2eeK[IVbX]]MLcdOEI91
 Z3 DPx8 cyclonev 19 cyclonev_components 0 22 GFL[QAd@dAZF:`jjOGn9>2
 Z4 DPx12 altera_lnsim 23 altera_lnsim_components 0 22 3dzZ?YU_4FC5UU0cTXRET1
@@ -20,7 +20,7 @@ Z7 DPx4 ieee 12 vital_timing 0 22 J>EBealN09f8GzldA[z2>3
 Z8 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
 Z9 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
 Z10 DPx6 altera 28 altera_primitives_components 0 22 VSD=32;3391kSOd?PDZYj3
-!i122 6
+!i122 12
 R0
 Z11 8Relogio.vho
 Z12 FRelogio.vho
@@ -30,9 +30,9 @@ VBjUzNIBIdk>iFie[IOX0E1
 !s100 =^WgGRPPKG`;=Inf;HaQV0
 Z13 OV;C;2020.1;71
 32
-Z14 !s110 1713220409
+Z14 !s110 1713460671
 !i10b 1
-Z15 !s108 1713220408.000000
+Z15 !s108 1713460671.000000
 Z16 !s90 -work|work|Relogio.vho|
 Z17 !s107 Relogio.vho|
 !i113 1
@@ -49,11 +49,11 @@ R8
 R9
 R10
 DEx4 work 7 relogio 0 22 BjUzNIBIdk>iFie[IOX0E1
-!i122 6
-l2794
-L59 27605
-VRX?ZU1WOMFBeZ5[6S>Bg53
-!s100 FiH0zkmX9m@<4[aHe7_l10
+!i122 12
+l421
+L59 3959
+V5DO6?@oL8_zFj2]C6Fg]T1
+!s100 I75N1C9ozPG=HKU1@S7B?3
 R13
 32
 R14
@@ -65,10 +65,10 @@ R17
 R18
 R19
 Erelogio_vhd_vec_tst
-Z20 w1713220407
+Z20 w1713460670
 R8
 R9
-!i122 7
+!i122 13
 R0
 Z21 8Waveform.vwf.vht
 Z22 FWaveform.vwf.vht
@@ -80,28 +80,28 @@ R13
 32
 R14
 !i10b 1
-Z23 !s108 1713220409.000000
-Z24 !s90 -work|work|Waveform.vwf.vht|
-Z25 !s107 Waveform.vwf.vht|
+R15
+Z23 !s90 -work|work|Waveform.vwf.vht|
+Z24 !s107 Waveform.vwf.vht|
 !i113 1
 R18
 R19
 Arelogio_arch
 R8
 R9
-Z26 DEx4 work 19 relogio_vhd_vec_tst 0 22 ODR^0<49@mV9D?EZ1g_Lb3
-!i122 7
+Z25 DEx4 work 19 relogio_vhd_vec_tst 0 22 ODR^0<49@mV9D?EZ1g_Lb3
+!i122 13
 l71
-Z27 L34 161
-Z28 VkU`F<9`;]T:Ka<ahWmiXJ0
-Z29 !s100 [:<idfHXAikRTY8U3A9_[2
+Z26 L34 161
+Z27 VkU`F<9`;]T:Ka<ahWmiXJ0
+Z28 !s100 [:<idfHXAikRTY8U3A9_[2
 R13
 32
 R14
 !i10b 1
+R15
 R23
 R24
-R25
 !i113 1
 R18
 R19
