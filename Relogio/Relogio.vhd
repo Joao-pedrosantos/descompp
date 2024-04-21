@@ -27,7 +27,7 @@ entity Relogio is
 
 	 MEM   : out std_logic_vector(larguraDados-6 downto 0);
 	 bolso : out std_logic_vector(7 downto 0);
-	 adrs  : out std_logic_vector(2 downto 0)
+	 adrs  : out std_logic_vector(5 downto 0)
 	 
 	 
 	);

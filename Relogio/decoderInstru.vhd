@@ -34,8 +34,8 @@ saida <= "000000000000000" when opcode = NOP  else
 			"000010000000000" when opcode = JMP  else
 			"000000010000000" when (opcode = JEQ and fg = '1')  else
 			"000000000000110" when opcode = CEQ  else
-			"011100100000000" when opcode = JSR  else
-			"100001000000000" when opcode = RET  else
+			"001100100000000" when opcode = JSR  else
+			"110101000000000" when opcode = RET  else
 			"000000000000000";  -- NOP para os opcodes Indefinidos
 			
 			

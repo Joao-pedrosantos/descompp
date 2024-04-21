@@ -20,6 +20,7 @@ proc simTimestamp {} {
 after 2500 simTimestamp
 run -all
 quit -f
+
 </modelsim_script>
 <modelsim_script_timing>onerror {exit -code 1}
 vlib work
@@ -38,6 +39,7 @@ proc simTimestamp {} {
 after 2500 simTimestamp
 run -all
 quit -f
+
 </modelsim_script_timing>
 <hdl_lang>vhdl</hdl_lang>
 </simulation_settings>*/
@@ -1130,10 +1132,40 @@ SIGNAL("adrs")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = BUS;
-	WIDTH = 3;
+	WIDTH = 6;
 	LSB_INDEX = 0;
 	DIRECTION = OUTPUT;
 	PARENT = "";
+}
+
+SIGNAL("adrs[5]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "adrs";
+}
+
+SIGNAL("adrs[4]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "adrs";
+}
+
+SIGNAL("adrs[3]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "adrs";
 }
 
 SIGNAL("adrs[2]")
@@ -2005,6 +2037,33 @@ TRANSITION_LIST("SW[0]")
 	{
 		REPEAT = 1;
 		LEVEL 0 FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("adrs[5]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("adrs[4]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("adrs[3]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
 	}
 }
 
@@ -3090,12 +3149,12 @@ DISPLAY_LINE
 	RADIX = Binary;
 	TREE_INDEX = 105;
 	TREE_LEVEL = 0;
-	CHILDREN = 106, 107, 108;
+	CHILDREN = 106, 107, 108, 109, 110, 111;
 }
 
 DISPLAY_LINE
 {
-	CHANNEL = "adrs[2]";
+	CHANNEL = "adrs[5]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
 	TREE_INDEX = 106;
@@ -3105,7 +3164,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "adrs[1]";
+	CHANNEL = "adrs[4]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
 	TREE_INDEX = 107;
@@ -3115,10 +3174,40 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "adrs[0]";
+	CHANNEL = "adrs[3]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
 	TREE_INDEX = 108;
+	TREE_LEVEL = 1;
+	PARENT = 105;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "adrs[2]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 109;
+	TREE_LEVEL = 1;
+	PARENT = 105;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "adrs[1]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 110;
+	TREE_LEVEL = 1;
+	PARENT = 105;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "adrs[0]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 111;
 	TREE_LEVEL = 1;
 	PARENT = 105;
 }
