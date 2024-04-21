@@ -1,5 +1,5 @@
 Flow report for Relogio
-Thu Apr 18 14:17:51 2024
+Sun Apr 21 20:16:18 2024
 Quartus Prime Version 20.1.0 Build 711 06/05/2020 SJ Lite Edition
 
 
@@ -41,25 +41,25 @@ https://fpgasoftware.intel.com/eula.
 +-------------------------------------------------------------------------------+
 ; Flow Summary                                                                  ;
 +---------------------------------+---------------------------------------------+
-; Flow Status                     ; Successful - Thu Apr 18 14:17:51 2024       ;
+; Flow Status                     ; Successful - Sun Apr 21 20:16:18 2024       ;
 ; Quartus Prime Version           ; 20.1.0 Build 711 06/05/2020 SJ Lite Edition ;
 ; Revision Name                   ; Relogio                                     ;
 ; Top-level Entity Name           ; Relogio                                     ;
 ; Family                          ; Cyclone V                                   ;
 ; Device                          ; 5CEBA4F23C7                                 ;
 ; Timing Models                   ; Final                                       ;
-; Logic utilization (in ALMs)     ; N/A                                         ;
-; Total registers                 ; 43                                          ;
-; Total pins                      ; 96                                          ;
+; Logic utilization (in ALMs)     ; 1,031 / 18,480 ( 6 % )                      ;
+; Total registers                 ; 1664                                        ;
+; Total pins                      ; 96 / 224 ( 43 % )                           ;
 ; Total virtual pins              ; 0                                           ;
-; Total block memory bits         ; 0                                           ;
-; Total DSP Blocks                ; 0                                           ;
+; Total block memory bits         ; 0 / 3,153,920 ( 0 % )                       ;
+; Total DSP Blocks                ; 0 / 66 ( 0 % )                              ;
 ; Total HSSI RX PCSs              ; 0                                           ;
 ; Total HSSI PMA RX Deserializers ; 0                                           ;
 ; Total HSSI TX PCSs              ; 0                                           ;
 ; Total HSSI PMA TX Serializers   ; 0                                           ;
-; Total PLLs                      ; 0                                           ;
-; Total DLLs                      ; 0                                           ;
+; Total PLLs                      ; 0 / 4 ( 0 % )                               ;
+; Total DLLs                      ; 0 / 4 ( 0 % )                               ;
 +---------------------------------+---------------------------------------------+
 
 
@@ -68,7 +68,7 @@ https://fpgasoftware.intel.com/eula.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 04/18/2024 14:17:39 ;
+; Start date & time ; 04/21/2024 20:13:47 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; Relogio             ;
 +-------------------+---------------------+
@@ -79,7 +79,7 @@ https://fpgasoftware.intel.com/eula.
 +-------------------------------------+----------------------------------------+---------------+-------------+-----------------------------------+
 ; Assignment Name                     ; Value                                  ; Default Value ; Entity Name ; Section Id                        ;
 +-------------------------------------+----------------------------------------+---------------+-------------+-----------------------------------+
-; COMPILER_SIGNATURE_ID               ; 925257250049.171346065953327           ; --            ; --          ; --                                ;
+; COMPILER_SIGNATURE_ID               ; 91766454223.171374122714644            ; --            ; --          ; --                                ;
 ; EDA_GENERATE_FUNCTIONAL_NETLIST     ; Off                                    ; --            ; --          ; eda_board_design_timing           ;
 ; EDA_GENERATE_FUNCTIONAL_NETLIST     ; Off                                    ; --            ; --          ; eda_board_design_boundary_scan    ;
 ; EDA_GENERATE_FUNCTIONAL_NETLIST     ; Off                                    ; --            ; --          ; eda_board_design_signal_integrity ;
@@ -101,30 +101,36 @@ https://fpgasoftware.intel.com/eula.
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name          ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis ; 00:00:05     ; 1.0                     ; 498 MB              ; 00:00:13                           ;
-; EDA Netlist Writer   ; 00:00:00     ; 1.0                     ; 661 MB              ; 00:00:00                           ;
-; EDA Netlist Writer   ; 00:00:01     ; 1.0                     ; 665 MB              ; 00:00:00                           ;
-; Total                ; 00:00:06     ; --                      ; --                  ; 00:00:13                           ;
+; Analysis & Synthesis ; 00:00:19     ; 1.0                     ; 4858 MB             ; 00:00:14                           ;
+; Fitter               ; 00:01:40     ; 1.1                     ; 6307 MB             ; 00:01:10                           ;
+; Assembler            ; 00:00:07     ; 1.0                     ; 4838 MB             ; 00:00:03                           ;
+; Timing Analyzer      ; 00:00:14     ; 1.9                     ; 5124 MB             ; 00:00:09                           ;
+; EDA Netlist Writer   ; 00:00:03     ; 1.0                     ; 4736 MB             ; 00:00:01                           ;
+; Total                ; 00:02:23     ; --                      ; --                  ; 00:01:37                           ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 
-+---------------------------------------------------------------------------------------------+
-; Flow OS Summary                                                                             ;
-+----------------------+-----------------------+----------------+------------+----------------+
-; Module Name          ; Machine Hostname      ; OS Name        ; OS Version ; Processor type ;
-+----------------------+-----------------------+----------------+------------+----------------+
-; Analysis & Synthesis ; joao-Inspiron-15-3511 ; Ubuntu 22.04.4 ; 22         ; x86_64         ;
-; EDA Netlist Writer   ; joao-Inspiron-15-3511 ; Ubuntu 22.04.4 ; 22         ; x86_64         ;
-; EDA Netlist Writer   ; joao-Inspiron-15-3511 ; Ubuntu 22.04.4 ; 22         ; x86_64         ;
-+----------------------+-----------------------+----------------+------------+----------------+
++------------------------------------------------------------------------------------+
+; Flow OS Summary                                                                    ;
++----------------------+------------------+------------+------------+----------------+
+; Module Name          ; Machine Hostname ; OS Name    ; OS Version ; Processor type ;
++----------------------+------------------+------------+------------+----------------+
+; Analysis & Synthesis ; DELL-FRACASSI    ; Windows 10 ; 10.0       ; x86_64         ;
+; Fitter               ; DELL-FRACASSI    ; Windows 10 ; 10.0       ; x86_64         ;
+; Assembler            ; DELL-FRACASSI    ; Windows 10 ; 10.0       ; x86_64         ;
+; Timing Analyzer      ; DELL-FRACASSI    ; Windows 10 ; 10.0       ; x86_64         ;
+; EDA Netlist Writer   ; DELL-FRACASSI    ; Windows 10 ; 10.0       ; x86_64         ;
++----------------------+------------------+------------+------------+----------------+
 
 
 ------------
 ; Flow Log ;
 ------------
 quartus_map --read_settings_files=on --write_settings_files=off Relogio -c Relogio
-quartus_eda --gen_testbench --tool=modelsim_oem --format=vhdl --write_settings_files=off Relogio -c Relogio --vector_source=/home/joao/Documents/DesComp/Relogio/Waveform.vwf --testbench_file=/home/joao/Documents/DesComp/Relogio/simulation/qsim/Waveform.vwf.vht
-quartus_eda --write_settings_files=off --simulation=on --functional=on --flatten_buses=off --tool=modelsim_oem --format=vhdl --output_directory=/home/joao/Documents/DesComp/Relogio/simulation/qsim/ Relogio -c Relogio
+quartus_fit --read_settings_files=off --write_settings_files=off Relogio -c Relogio
+quartus_asm --read_settings_files=off --write_settings_files=off Relogio -c Relogio
+quartus_sta Relogio -c Relogio
+quartus_eda --read_settings_files=off --write_settings_files=off Relogio -c Relogio
 
 
 

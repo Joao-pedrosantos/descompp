@@ -79,6 +79,10 @@ architecture arquitetura of Relogio is
   signal segundos			 : std_logic;
   signal rapidao			 : std_logic;
   signal hab_rel         : std_logic;
+  
+  signal sigSegundos : std_logic_vector(7 downto 0);
+  signal sigMinutos : std_logic_vector(7 downto 0);
+  signal sigHoras : std_logic_vector(7 downto 0);
 
 begin
 
@@ -127,26 +131,53 @@ REGled2 : entity work.registradorFlag
 REGleds : entity work.registrador8bit
 			 port map (DIN => Dout, DOUT => sreg8b, ENABLE => (habEscritaMEM AND habLED(0) AND habRAM(4) AND not(Endereco(5))), clk => CLK, RST => '0');
 			 
-			 
-			 
-reg4b0: entity work.registrador4bit
-          port map (DIN => Dout(3 downto 0), DOUT => sghex0, ENABLE => (habEscritaMEM AND Endereco(5) AND habRAM(4) AND habLED(0)), CLK => CLK, RST => '0');
-			 
-reg4b1: entity work.registrador4bit
-          port map (DIN => Dout(3 downto 0), DOUT => sghex1, ENABLE => (habEscritaMEM AND Endereco(5) AND habRAM(4) AND habLED(1)), CLK => CLK, RST => '0');
+regSegundos : entity work.registrador8bit
+			port map (
+				DIN => Dout,
+				DOUT => sigSegundos,
+				ENABLE => (habEscritaMEM AND Endereco(5) AND habRAM(4) AND habLED(0)),
+				CLK => CLK,
+				RST => '0'
+			);
+			
+regMinutos : entity work.registrador8bit
+			port map (
+				DIN => Dout,
+				DOUT => sigMinutos,
+				ENABLE => (habEscritaMEM AND Endereco(5) AND habRAM(4) AND habLED(1)),
+				CLK => CLK,
+				RST => '0'
+			);
+			
+regHoras : entity work.registrador8bit
+			port map (
+				DIN => Dout,
+				DOUT => sigHoras,
+				ENABLE => (habEscritaMEM AND Endereco(5) AND habRAM(4) AND habLED(2)),
+				CLK => CLK,
+				RST => '0'
+			);
 
-reg4b2: entity work.registrador4bit
-          port map (DIN => Dout(3 downto 0), DOUT => sghex2, ENABLE => (habEscritaMEM AND Endereco(5) AND habRAM(4) AND habLED(2)), CLK => CLK, RST => '0');
-			 
-reg4b3: entity work.registrador4bit
-          port map (DIN => Dout(3 downto 0), DOUT => sghex3, ENABLE => (habEscritaMEM AND Endereco(5) AND habRAM(4) AND habLED(3)), CLK => CLK, RST => '0');
-			 
-reg4b4: entity work.registrador4bit
-          port map (DIN => Dout(3 downto 0), DOUT => sghex4, ENABLE => (habEscritaMEM AND Endereco(5) AND habRAM(4) AND habLED(4)), CLK => CLK, RST => '0');
-			 
-reg4b5: entity work.registrador4bit
-          port map (DIN => Dout(3 downto 0), DOUT => sghex5, ENABLE => (habEscritaMEM AND Endereco(5) AND habRAM(4) AND habLED(5)), CLK => CLK, RST => '0');
-			 
+doubleHexSegundos : entity work.double7Seg
+			port map(
+				dado => sigSegundos,
+				saidaDezena => sghex1,
+				saidaUnidade => sghex0
+			);
+			
+doubleHexMinutos : entity work.double7Seg
+			port map(
+				dado => sigMinutos,
+				saidaDezena => sghex3,
+				saidaUnidade => sghex2
+			);
+			
+doubleHexHoras : entity work.double7Seg
+			port map(
+				dado => SigHoras,
+				saidaDezena => sghex5,
+				saidaUnidade => sghex4
+			);
 			 
 			 
 conv0 :  entity work.conversorHex7Seg
@@ -190,10 +221,6 @@ conv5 :  entity work.conversorHex7Seg
                  negativo => '0',
                  overFlow =>  '0',
                  saida7seg => HEX5);
-					  
-					 
-					  
-					  
 					  
 					  
 buff3_7_0 :  entity work.buffer_3_state_8portas
@@ -252,7 +279,7 @@ divisor : entity work.divisorGenerico
             port map (clk => CLK, saida_clk => segundos);
 
 divisorrapidao : entity work.divisorGenerico
-            generic map (divisor => 2500000)   -- divide por 10.
+            generic map (divisor => 25000)   -- divide por 10.
             port map (clk => CLK, saida_clk => rapidao);
 				
 PC_OUT <= PC;
