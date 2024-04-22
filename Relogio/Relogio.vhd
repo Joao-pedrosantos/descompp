@@ -279,7 +279,7 @@ divisor : entity work.divisorGenerico
             port map (clk => CLK, saida_clk => segundos);
 
 divisorrapidao : entity work.divisorGenerico
-            generic map (divisor => 25000)   -- divide por 10.
+            generic map (divisor => 2500)   -- divide por 10.
             port map (clk => CLK, saida_clk => rapidao);
 				
 PC_OUT <= PC;
