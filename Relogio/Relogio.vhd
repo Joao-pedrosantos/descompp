@@ -65,9 +65,9 @@ architecture arquitetura of Relogio is
   signal sreg1b2			 : std_logic;
   signal k0buff          : std_logic;
   signal k0saida			 : std_logic;
+  
   signal limpa0			 : std_logic;
   signal saida_deb0      : std_logic;
-  signal saida_deb0_1    : std_logic;
   signal saida_reg_deb0  : std_logic;
   signal hab_key0			 : std_logic;
   
@@ -76,9 +76,21 @@ architecture arquitetura of Relogio is
   signal saida_reg_deb1  : std_logic;
   signal hab_key1			 : std_logic;
   
+  signal limpa2			 : std_logic;
+  signal saida_deb2      : std_logic;
+  signal saida_reg_deb2  : std_logic;
+  signal hab_key2			 : std_logic;
+  
+  signal limpa3			 : std_logic;
+  signal saida_deb3      : std_logic;
+  signal saida_reg_deb3  : std_logic;
+  signal hab_key3			 : std_logic;
+  
   signal segundos			 : std_logic;
   signal rapidao			 : std_logic;
   signal hab_rel         : std_logic;
+  
+  signal sigTarde : std_logic;
   
   signal sigSegundos : std_logic_vector(7 downto 0);
   signal sigMinutos : std_logic_vector(7 downto 0);
@@ -162,21 +174,25 @@ doubleHexSegundos : entity work.double7Seg
 			port map(
 				dado => sigSegundos,
 				saidaDezena => sghex1,
-				saidaUnidade => sghex0
+				saidaUnidade => sghex0,
+				doze => '0'
 			);
 			
 doubleHexMinutos : entity work.double7Seg
 			port map(
 				dado => sigMinutos,
 				saidaDezena => sghex3,
-				saidaUnidade => sghex2
+				saidaUnidade => sghex2,
+				doze => '0'
 			);
 			
 doubleHexHoras : entity work.double7Seg
 			port map(
 				dado => SigHoras,
 				saidaDezena => sghex5,
-				saidaUnidade => sghex4
+				saidaUnidade => sghex4,
+				doze => SW(7),
+				isTarde => sigTarde
 			);
 			 
 			 
@@ -223,14 +239,14 @@ conv5 :  entity work.conversorHex7Seg
                  saida7seg => HEX5);
 					  
 					  
-buff3_7_0 :  entity work.buffer_3_state_8portas
+buff3_sws :  entity work.buffer_3_state_8portas
         port map(entrada => SW(7 downto 0), habilita =>  (habLeituraMEM AND not(Endereco(5)) AND habLED(0) AND habRAM(5)), saida => saidaMEM);
 
 
-buff3_8 :  entity work.buffer_3_state_1porta
+buff3_sw8 :  entity work.buffer_3_state_1porta
         port map(entrada => SW(8), habilita =>  (habLeituraMEM AND not(Endereco(5)) AND habLED(1) AND habRAM(5)), saida => saidaMEM(0));
 		  
-buff3_9 :  entity work.buffer_3_state_1porta
+buff3_sw9 :  entity work.buffer_3_state_1porta
         port map(entrada => SW(9), habilita =>  (habLeituraMEM AND not(Endereco(5)) AND habLED(2) AND habRAM(5)), saida => saidaMEM(0));
 
 		  
@@ -240,18 +256,15 @@ key0: entity work.buffer_3_state_8portas
 			port map (entrada => "0000000" & saida_reg_deb0, habilita => hab_key0, saida => saidaMEM);
 			
 key1: entity work.buffer_3_state_8portas
-			port map (entrada => "0000000" & saida_reg_deb1, habilita => hab_key1, saida => saidaMEM);
-		  
-		  
+			port map (entrada => "0000000" & saida_reg_deb1, habilita => hab_key1, saida => saidaMEM);  
 		    
-buff3_K2 :  entity work.buffer_3_state_1porta
-        port map(entrada => not(KEY(2)), habilita =>  (habLeituraMEM AND Endereco(5) AND habLED(2) AND habRAM(5)), saida => saidaMEM(0));
-		    
-buff3_K3 :  entity work.buffer_3_state_1porta
-        port map(entrada => not(KEY(3)), habilita =>  (habLeituraMEM AND Endereco(5) AND habLED(3) AND habRAM(5)), saida => saidaMEM(0));
-		    
-		  	  
-buff3_K4 :  entity work.buffer_3_state_1porta
+key2: entity work.buffer_3_state_8portas
+			port map (entrada => "0000000" & saida_reg_deb2, habilita => hab_key2, saida => saidaMEM);  
+			
+key3: entity work.buffer_3_state_8portas
+			port map (entrada => "0000000" & saida_reg_deb3, habilita => hab_key3, saida => saidaMEM);  
+
+buff3_fpga_reset :  entity work.buffer_3_state_1porta
         port map(entrada => not(FPGA_RESET_N), habilita =>  (habLeituraMEM AND Endereco(5) AND habLED(4) AND habRAM(5)), saida => saidaMEM(0));
 		    
 		  	   
@@ -262,8 +275,6 @@ debounce0: work.edgeDetector(bordaSubida)
 fdebounce0 : entity work.registradorFlag   
           port map (DIN => '1', DOUT => saida_reg_deb0, ENABLE => '1', CLK => (hab_rel), RST => limpa0);
 
-hab_rel <= ((segundos AND (not (SW(9)))) OR (rapidao AND SW(9)));
-
 
 debounce1: work.edgeDetector(bordaSubida)
         port map (clk => CLK, entrada => (not KEY(1)), saida => saida_deb1);
@@ -272,28 +283,72 @@ debounce1: work.edgeDetector(bordaSubida)
 fdebounce1 : entity work.registradorFlag   
           port map (DIN => '1', DOUT => saida_reg_deb1, ENABLE => '1', CLK => (saida_deb1), RST => limpa1);
 
+debounce2: work.edgeDetector(bordaSubida)
+          port map (
+            clk => CLK,
+            entrada => not(KEY(2)),
+            saida => saida_deb2
+          );
 
+fdebounce2 : entity work.registradorFlag
+             port map (
+               DIN => '1',
+               DOUT => saida_reg_deb2,
+               ENABLE => '1',
+               CLK => saida_deb2,
+               RST => limpa2
+             );
+
+debounce3: work.edgeDetector(bordaSubida)
+          port map (
+            clk => CLK,
+            entrada => not(KEY(3)),
+            saida => saida_deb3
+          );
+
+fdebounce3 : entity work.registradorFlag
+             port map (
+               DIN => '1',
+               DOUT => saida_reg_deb3,
+               ENABLE => '1',
+               CLK => saida_deb3,
+               RST => limpa3
+             );
 			 
 divisor : entity work.divisorGenerico
-            generic map (divisor => 25000000)   -- divide por 10.
+            generic map (divisor => 25000000)
             port map (clk => CLK, saida_clk => segundos);
 
-divisorrapidao : entity work.divisorGenerico
-            generic map (divisor => 2500)   -- divide por 10.
+divisorRapido : entity work.divisorGenerico
+            generic map (divisor => 25000)
             port map (clk => CLK, saida_clk => rapidao);
 				
+hab_rel <= ((segundos AND (not (SW(9)))) OR (rapidao AND SW(9)));
+
 PC_OUT <= PC;
 
 MEM <= saidaMEM;
 
+-- 1111.1111 (511)
 limpa0 <= (habEscritaMEM AND Endereco(8) AND Endereco(7) AND Endereco(6) AND Endereco(5) AND Endereco(4) AND Endereco(3) AND Endereco(2) AND Endereco(1) AND Endereco(0));
+
+-- 1111.1110 (510)
 limpa1 <= (habEscritaMEM AND Endereco(8) AND Endereco(7) AND Endereco(6) AND Endereco(5) AND Endereco(4) AND Endereco(3) AND Endereco(2) AND Endereco(1) AND not(Endereco(0)));
+
+-- 1111.1101 (509)
+limpa2 <= (habEscritaMEM AND Endereco(8) AND Endereco(7) AND Endereco(6) AND Endereco(5) AND Endereco(4) AND Endereco(3) AND Endereco(2) AND not(Endereco(1)) AND Endereco(0));
+
+-- 1111.1100 (508)
+limpa3 <= (habEscritaMEM AND Endereco(8) AND Endereco(7) AND Endereco(6) AND Endereco(5) AND Endereco(4) AND Endereco(3) AND Endereco(2) AND not(Endereco(1)) AND not(Endereco(0)));
+
 
 hab_key0 <= (habLeituraMEM and Endereco(5) and habLED(0) and habRAM(5));
 hab_key1 <= (habLeituraMEM and Endereco(5) and habLED(1) and habRAM(5));
+hab_key2 <= (habLeituraMEM AND Endereco(5) AND habLED(2) AND habRAM(5));
+hab_key3 <= (habLeituraMEM AND Endereco(5) AND habLED(3) AND habRAM(5));
 
 LEDR(7 downto 0) <= sreg8b;
-LEDR(9) <= sreg1b;
+LEDR(9) <= sigTarde;
 LEDR(8) <= sreg1b2;
 
 end architecture;

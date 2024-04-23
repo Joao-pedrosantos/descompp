@@ -117,8 +117,6 @@ MUXRET   :  entity work.muxGenerico2x1  generic map (larguraDados => 6)
                  seletor_MUX => MUXPILHA,
                  saida_MUX => end_ram);
 			
-
-			
 ULA_sr : entity work.ULASomaSubRET  generic map(larguraDados => (6))
           port map (entradaA => saida_Reg, entradaB => "000001", saida => reg_ret, seletor => Operacao_ULA_ret);
 

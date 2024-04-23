@@ -1,0 +1,38 @@
+Quartus Prime Archive log --	C:/Users/pedro/descompp/Relogio/Relogio.qarlog
+
+Archive:	C:/Users/pedro/descompp/Relogio/Relogio.qar
+Date:		Mon Apr 22 23:40:38 2024
+Quartus Prime		20.1.0 Build 711 06/05/2020 SJ Lite Edition
+
+	=========== Files Selected: ===========
+C:/Users/pedro/descompp/Relogio/CPU.vhd
+C:/Users/pedro/descompp/Relogio/Relogio.qpf
+C:/Users/pedro/descompp/Relogio/Relogio.qsf
+C:/Users/pedro/descompp/Relogio/Relogio.vhd
+C:/Users/pedro/descompp/Relogio/ULASomaSub.vhd
+C:/Users/pedro/descompp/Relogio/ULASomaSubRET.vhd
+C:/Users/pedro/descompp/Relogio/Waveform.vwf
+C:/Users/pedro/descompp/Relogio/bancoRegistradoresArqRegMem.vhd
+C:/Users/pedro/descompp/Relogio/buffer_3_state_1porta.vhd
+C:/Users/pedro/descompp/Relogio/buffer_3_state_8portas.vhd
+C:/Users/pedro/descompp/Relogio/conversorHex7Seg.vhd
+C:/Users/pedro/descompp/Relogio/decoderGenerico3x8.vhd
+C:/Users/pedro/descompp/Relogio/decoderInstru.vhd
+C:/Users/pedro/descompp/Relogio/decoderJMP.vhd
+C:/Users/pedro/descompp/Relogio/divisorGenerico.vhd
+C:/Users/pedro/descompp/Relogio/double7Seg.vhd
+C:/Users/pedro/descompp/Relogio/edgeDetector.vhd
+C:/Users/pedro/descompp/Relogio/memoriaRAM.vhd
+C:/Users/pedro/descompp/Relogio/memoriaROM.vhd
+C:/Users/pedro/descompp/Relogio/muxGenerico2x1.vhd
+C:/Users/pedro/descompp/Relogio/muxGenerico4x1.vhd
+C:/Users/pedro/descompp/Relogio/registrador4bit.vhd
+C:/Users/pedro/descompp/Relogio/registrador8bit.vhd
+C:/Users/pedro/descompp/Relogio/registradorFlag.vhd
+C:/Users/pedro/descompp/Relogio/registradorGenerico.vhd
+C:/Users/pedro/descompp/Relogio/somaConstante.vhd
+c:/intelfpga_lite/20.1/quartus/bin64/assignment_defaults.qdf
+	======= Total: 27 files to archive =======
+
+	================ Status: ===============
+All files archived successfully.

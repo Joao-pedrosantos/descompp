@@ -6,17 +6,25 @@ entity double7Seg is
     (
         -- Input ports
         dado : in  std_logic_vector(7 downto 0);
+		  doze : in std_logic;
         -- Output ports
         saidaDezena : out std_logic_vector(3 downto 0);
-		  saidaUnidade : out std_logic_vector(3 downto 0)
+		  saidaUnidade : out std_logic_vector(3 downto 0);
+		  isTarde : out std_logic
     );
 end entity;
 
 architecture comportamento of double7Seg is
 
+signal saidaDezenaNormal : std_logic_vector(3 downto 0);
+signal saidaUnidadeNormal : std_logic_vector(3 downto 0);
+signal saidaDezenaDoze : std_logic_vector(3 downto 0);
+signal saidaUnidadeDoze : std_logic_vector(3 downto 0);
+signal sigIsTarde : std_logic;
+
 begin
 
-	saidaDezena <= "0000" when dado="00000000" else -- (0) 0
+	saidaDezenaNormal <= "0000" when dado="00000000" else -- (0) 0
 						"0000" when dado="00000001" else -- (0) 1
 						"0000" when dado="00000010" else -- (0) 2
 						"0000" when dado="00000011" else -- (0) 3
@@ -118,7 +126,7 @@ begin
 						"1001" when dado="01100011" else -- (9) 99
 						"1111";
 						
-	saidaUnidade  <= 	"0000" when dado="00000000" else -- (0) 0
+	saidaUnidadeNormal  <= 	"0000" when dado="00000000" else -- (0) 0
 							"0001" when dado="00000001" else -- (1) 1
 							"0010" when dado="00000010" else -- (2) 2
 							"0011" when dado="00000011" else -- (3) 3
@@ -219,5 +227,76 @@ begin
 							"1000" when dado="01100010" else -- (8) 98
 							"1001" when dado="01100011" else -- (9) 99
 							"1111";
+							
+	saidaUnidadeDoze  <= 	"0000" when dado="00000000" else -- (0) 0 
+									"0001" when dado="00000001" else -- (1) 1
+									"0010" when dado="00000010" else -- (2) 2
+									"0011" when dado="00000011" else -- (3) 3
+									"0100" when dado="00000100" else -- (4) 4
+									"0101" when dado="00000101" else -- (5) 5
+									"0110" when dado="00000110" else -- (6) 6
+									"0111" when dado="00000111" else -- (7) 7
+									"1000" when dado="00001000" else -- (8) 8
+									"1001" when dado="00001001" else -- (9) 9
+									"0000" when dado="00001010" else -- (0) 10
+									"0001" when dado="00001011" else -- (1) 11
+									"0010" when dado="00001100" else -- (2) 12
+									"0001" when dado="00001101" else -- (1) 13 ---> 01
+									"0010" when dado="00001110" else -- (2) 14 ---> 02
+									"0011" when dado="00001111" else -- (3) 15 ---> 03
+									"0100" when dado="00010000" else -- (4) 16 ---> 04
+									"0101" when dado="00010001" else -- (5) 17 ---> 05
+									"0110" when dado="00010010" else -- (6) 18 ---> 06
+									"0111" when dado="00010011" else -- (7) 19 ---> 07
+									"1000" when dado="00010100" else -- (8) 20 ---> 08
+									"1001" when dado="00010101" else -- (9) 21 ---> 09
+									"0000" when dado="00010110" else -- (0) 22 ---> 10
+									"0001" when dado="00010111" else -- (1) 23 ---> 11
+									"1111";
+									
+  saidaDezenaDoze <= "0000" when dado="00000000" else -- (0) 0
+							"0000" when dado="00000001" else -- (0) 1
+							"0000" when dado="00000010" else -- (0) 2
+							"0000" when dado="00000011" else -- (0) 3
+							"0000" when dado="00000100" else -- (0) 4
+							"0000" when dado="00000101" else -- (0) 5
+							"0000" when dado="00000110" else -- (0) 6
+							"0000" when dado="00000111" else -- (0) 7
+							"0000" when dado="00001000" else -- (0) 8
+							"0000" when dado="00001001" else -- (0) 9
+							"0001" when dado="00001010" else -- (1) 10
+							"0001" when dado="00001011" else -- (1) 11
+							"0001" when dado="00001100" else -- (1) 12
+							"0000" when dado="00001101" else -- (0) 13
+							"0000" when dado="00001110" else -- (0) 14
+							"0000" when dado="00001111" else -- (0) 15
+							"0000" when dado="00010000" else -- (0) 16
+							"0000" when dado="00010001" else -- (0) 17
+							"0000" when dado="00010010" else -- (0) 18
+							"0000" when dado="00010011" else -- (0) 19
+							"0000" when dado="00010100" else -- (0) 20
+							"0000" when dado="00010101" else -- (0) 21
+							"0001" when dado="00010110" else -- (1) 22
+							"0001" when dado="00010111" else -- (1) 23
+							"1111";
+							
+	saidaUnidade <= saidaUnidadeNormal when doze='0' else saidaUnidadeDoze;
+	saidaDezena <= saidaDezenaNormal when doze='0' else saidaDezenaDoze;
+	
+	sigIsTarde <=    '0' when dado="00000000" else -- (0) 0
+						  '0' when dado="00000001" else -- (0) 1
+						  '0' when dado="00000010" else -- (0) 2
+						  '0' when dado="00000011" else -- (0) 3
+						  '0' when dado="00000100" else -- (0) 4
+						  '0' when dado="00000101" else -- (0) 5
+						  '0' when dado="00000110" else -- (0) 6
+						  '0' when dado="00000111" else -- (0) 7
+						  '0' when dado="00001000" else -- (0) 8
+						  '0' when dado="00001001" else -- (0) 9
+						  '0' when dado="00001010" else -- (1) 10
+						  '0' when dado="00001011" else -- (1) 11
+						  '1';
+						  
+	isTarde <= doze and sigIsTarde;
 
 end architecture;
